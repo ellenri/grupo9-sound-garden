@@ -2,19 +2,16 @@ const SOUND_URL = 'https://xp41-soundgarden-api.herokuapp.com/events';
 
 const listarEventos = async () => {
 
-    const eventos = await fetch(SOUND_URL, {
+    const res =  await fetch(SOUND_URL, {
         method: "GET",
         mode: "cors",
         headers: {
             "Content-Type": "application/json"
         }
-    }).then((resposta) => {
-
-        //retorna lista em array de objetos
-        return resposta.json();
-    });
-
-    // console.log(eventos);
+    })
+    const eventos = await res.json()
+  
+    console.log(eventos);
 
     const tbody = document.querySelector('.lista-eventos tbody');
 
@@ -35,13 +32,17 @@ const listarEventos = async () => {
               </tr>
         `;
     });
+    console.log(htmlEventos)
 
     tbody.innerHTML = htmlEventos;
 
 
 }
 
-listarEventos();
+listarEventos()
+
+
+
 
 
 

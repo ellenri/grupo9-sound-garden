@@ -6,6 +6,13 @@ const findID = () => {
     return id;
 }
 
+const inputNome = document.getElementById("nome");
+const inputAtracoes = document.getElementById("atracoes");
+const inputDescricao = document.getElementById("descricao");
+const inputData = document.getElementById("data");
+const inputLotacao = document.getElementById("lotacao");
+const inputBanner = document.getElementById("banner");
+
 const exibirDetalhesEvento = async () => {
     const dadosEvento =
         await fetch('https://xp41-soundgarden-api.herokuapp.com/events/' + findID(), {
@@ -18,12 +25,7 @@ const exibirDetalhesEvento = async () => {
 
     console.log(dadosEvento);
 
-    const inputNome = document.getElementById("nome");
-    const inputAtracoes = document.getElementById("atracoes");
-    const inputDescricao = document.getElementById("descricao");
-    const inputData = document.getElementById("data");
-    const inputLotacao = document.getElementById("lotacao");
-    const inputBanner = document.getElementById("banner");
+ 
 
     inputNome.value = dadosEvento.name;
     inputAtracoes.value = dadosEvento.attractions.join(', ');
@@ -35,7 +37,38 @@ const exibirDetalhesEvento = async () => {
 
 exibirDetalhesEvento();
 
+const buttonSubmit = document.querySelector("button.submit")
+const atualizarEvento = () => {
+    console.log("ola")
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
 
+    const body = JSON.stringify({
+        "name": inputNome.value,
+        "poster": inputBanner.value,
+        "attractions": inputAtracoes.value.split(', '),
+        "description" : inputDescricao.value,
+        "scheduled" : new Date().toISOString(),
+        // "scheduled" : inputData.value.toISOString(),
+        "number_tickets" : parseInt(inputLotacao.value),
 
+    });
 
-window.open('admin.html?acao=edit', "_SELF");
+    const requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: body,
+        redirect: 'follow'
+    };
+
+    fetch("https://xp41-soundgarden-api.herokuapp.com/events/" + findID(), requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => console.log('error', error));
+}
+buttonSubmit.addEventListener("click", (evento) => {
+    evento.preventDefault()
+    atualizarEvento()
+   
+
+})
