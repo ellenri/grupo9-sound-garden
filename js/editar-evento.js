@@ -25,7 +25,7 @@ const exibirDetalhesEvento = async () => {
 
     console.log(dadosEvento);
 
- 
+
 
     inputNome.value = dadosEvento.name;
     inputAtracoes.value = dadosEvento.attractions.join(', ');
@@ -48,9 +48,8 @@ const atualizarEvento = () => {
         "poster": inputBanner.value,
         "attractions": inputAtracoes.value.split(', '),
         "description" : inputDescricao.value,
-        "scheduled" : new Date().toISOString(),
-        // "scheduled" : inputData.value.toISOString(),
-        "number_tickets" : parseInt(inputLotacao.value),
+        "scheduled" : new Date(inputData.value).toISOString(),
+                "number_tickets" : parseInt(inputLotacao.value),
 
     });
 
@@ -69,6 +68,5 @@ const atualizarEvento = () => {
 buttonSubmit.addEventListener("click", (evento) => {
     evento.preventDefault()
     atualizarEvento()
-   
 
 })
