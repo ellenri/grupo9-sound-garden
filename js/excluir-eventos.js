@@ -59,7 +59,7 @@ const deletarParaSempre = () => {
             alert("Evento excluído!")
             setTimeout(() => {
                 window.open('./admin.html','_SELF')
-            }, 3000);
+            }, 2000);
         
         })
         .catch(error => console.log('error', error));
